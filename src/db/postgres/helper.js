@@ -1,4 +1,4 @@
-import PG, { Query } from 'pg'
+import PG from 'pg'
 
 const { Pool } = PG
 
