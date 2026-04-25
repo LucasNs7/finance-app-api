@@ -4,8 +4,6 @@ import { PostgresCreateUserRepository } from '../repository/postgres/createUser.
 
 export class CreateUserService {
    async execute(createUserParams) {
-      // TODO: verificar se o email já existe
-
       const userID = uuidv4()
       const hashedPassword = await bcrypt.hash(createUserParams.password, 10)
 
