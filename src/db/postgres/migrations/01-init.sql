@@ -3,11 +3,16 @@ CREATE TABLE IF NOT EXISTS users(
    first_name VARCHAR(50) NOT NULL,
    last_name VARCHAR(50) NOT NULL,
    email VARCHAR(100) NOT NULL UNIQUE,
-   password VARCHAR(100) NOT NULL,
+   password VARCHAR(100) NOT NULL
 );
 
 -- Sintaxe de Enum no SQL
-CREATE TYPE transaction_type AS ENUM ("EARNING", "EXPENSE", "INVESTMENT");
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'transaction_type') THEN
+      CREATE TYPE transaction_type AS ENUM ('EARNING', 'EXPENSE', 'INVESTMENT');
+   END IF;
+END$$;
 
 CREATE TABLE IF NOT EXISTS transactions(
    ID UUID PRIMARY KEY,
@@ -15,5 +20,5 @@ CREATE TABLE IF NOT EXISTS transactions(
    name VARCHAR(50) NOT NULL,
    date DATE NOT NULL,
    amount NUMERIC(10, 2) NOT NULL,
-   type transaction_type NOT NULL,
+   type transaction_type NOT NULL
 );

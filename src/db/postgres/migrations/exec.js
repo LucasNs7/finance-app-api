@@ -1,6 +1,6 @@
 import 'dotenv/config.js'
 import fs from 'fs'
-import { pool } from './src/db/postgres/helper.js'
+import { pool } from '../helper.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
