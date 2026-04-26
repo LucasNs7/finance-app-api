@@ -24,9 +24,9 @@ export class CreateUserController {
             })
          }
 
-         const emailIsValid = validator.isEmail(params.email)
+         const emailIsNotValid = validator.isEmail(params.email)
 
-         if (!emailIsValid) {
+         if (!emailIsNotValid) {
             return badRequest({
                message: 'Invalid Email. Please provide a valid one!',
             })
