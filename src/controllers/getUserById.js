@@ -19,6 +19,8 @@ export class GetUserByIdController {
             httpRequest.params.userId,
          )
 
+         if (!user) return notFound({ message: 'User not found' })
+
          return ok(user)
       } catch (error) {
          console.log(error)
