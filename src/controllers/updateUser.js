@@ -1,7 +1,13 @@
 import validator from 'validator'
-import { badRequest, ok, serverError } from './helpers.js'
+import { badRequest, ok, serverError } from './helpers/http.js'
 import { EmailAlreadyInUseError } from '../errors/user.js'
 import { UpdateUserService } from '../service/updateUser.js'
+import {
+   checkIfEmailIsValid,
+   invalidEmailResponse,
+   invalidIdResponse,
+   invalidPasswordResponse,
+} from './helpers/user.js'
 
 export class UpdateUserController {
    async execute(httpRequest) {
@@ -10,9 +16,7 @@ export class UpdateUserController {
 
          const isValidId = validator.isUUID(httpRequest.params.userId)
          if (!isValidId) {
-            return badRequest({
-               message: 'The provided ID is not valid',
-            })
+            return invalidIdResponse()
          }
 
          const updateParams = httpRequest.body
@@ -30,20 +34,20 @@ export class UpdateUserController {
          }
 
          if (updateParams.password) {
-            if (updateParams.password.length < 6) {
-               return badRequest({
-                  message: 'Password must be at least 6 characters',
-               })
+            const passwordIsValid = checkIfPasswordIsValid(
+               updateParams.password,
+            )
+
+            if (!passwordIsValid) {
+               return invalidPasswordResponse()
             }
          }
 
          if (updateParams.email) {
-            const emailIsNotValid = validator.isEmail(updateParams.email)
+            const emailIsNotValid = checkIfEmailIsValid(updateParams.email)
 
             if (!emailIsNotValid) {
-               return badRequest({
-                  message: 'Invalid Email. Please provide a valid one!',
-               })
+               return invalidEmailResponse()
             }
          }
 
