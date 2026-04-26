@@ -5,6 +5,20 @@ export const badRequest = (body) => {
    }
 }
 
+export const notFound = (body) => {
+   return {
+      statusCode: 404,
+      body,
+   }
+}
+
+export const ok = (body) => {
+   return {
+      statusCode: 200,
+      body,
+   }
+}
+
 export const created = (body) => {
    return {
       statusCode: 201,
