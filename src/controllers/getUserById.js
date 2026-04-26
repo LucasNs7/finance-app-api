@@ -1,4 +1,4 @@
-import { GetUserByIdService } from '../service/getUserById.js'
+import { GetUserByIdService } from '../service/index.js'
 import {
    checkIfIdIsValid,
    invalidIdResponse,

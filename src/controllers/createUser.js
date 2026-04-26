@@ -1,4 +1,4 @@
-import { CreateUserService } from '../service/createUser.js'
+import { CreateUserService } from '../service/index.js'
 import { EmailAlreadyInUseError } from '../errors/user.js'
 import {
    checkIfEmailIsValid,
