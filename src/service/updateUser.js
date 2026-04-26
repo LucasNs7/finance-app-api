@@ -12,7 +12,7 @@ export class UpdateUserService {
          const userWithProvidedEmail =
             await postgresGetUserByEmailRepository.execute(updateParams.email)
 
-         if (userWithProvidedEmail)
+         if (userWithProvidedEmail && userWithProvidedEmail.id != userId)
             throw new EmailAlreadyInUseError(updateParams.email)
       }
 
