@@ -16,6 +16,7 @@ export class CreateUserService {
          throw new EmailAlreadyInUseError(createUserParams.email)
 
       const userID = uuidv4()
+      
       const hashedPassword = await bcrypt.hash(createUserParams.password, 10)
 
       const user = {
