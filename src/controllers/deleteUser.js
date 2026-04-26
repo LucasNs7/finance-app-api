@@ -4,6 +4,7 @@ import {
    invalidIdResponse,
    ok,
    serverError,
+   userNotFoundResponse,
 } from './helpers/index.js'
 
 export class DeleteUserController {
@@ -18,6 +19,8 @@ export class DeleteUserController {
          const deleteUserService = new DeleteUserService()
 
          const deletedUser = await deleteUserService.execute(userId)
+
+         if (!deletedUser) return userNotFoundResponse()
 
          return ok(deletedUser)
       } catch (error) {
