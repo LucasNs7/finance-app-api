@@ -1,15 +1,14 @@
 import {
-   badRequest,
    checkIfAmountIsValid,
    checkIfIdIsValid,
-   checkIfRequiredFieldsAreIncludes,
    checkIfTypeIsValid,
    created,
    invalidAmountResponse,
    invalidIdResponse,
    invalidTypeResponse,
-   negativeAmountResponse,
+   requiredFieldIsMissingResponse,
    serverError,
+   validateRequiredFields,
 } from '../helpers/index.js'
 
 export class CreateTransactionController {
@@ -21,28 +20,20 @@ export class CreateTransactionController {
       try {
          const params = httpRequest.body
 
-         const requiredFields = [
-            'ID',
-            'user_id',
-            'name',
-            'date',
-            'amount',
-            'type',
-         ]
+         const requiredFields = ['user_id', 'name', 'date', 'amount', 'type']
 
-         for (const field of requiredFields) {
-            if (!params[field] || params[field].trim().length == 0) {
-               return badRequest({
-                  message: `Missing param: ${field}`,
-               })
-            }
+         const { ok, missingField } = validateRequiredFields(
+            params,
+            requiredFields,
+         )
+
+         if (!ok) {
+            return requiredFieldIsMissingResponse(missingField)
          }
 
          const userIdIsValid = checkIfIdIsValid(params.user_id)
 
          if (!userIdIsValid) return invalidIdResponse()
-
-         if (params.amount <= 0) return negativeAmountResponse()
 
          const amountIsValid = checkIfAmountIsValid(params.amount)
 

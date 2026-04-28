@@ -29,14 +29,13 @@ export const makeGetUserByIdController = () => {
 }
 
 export const makeCreateUserController = () => {
-   const postgresCreateUserRepository = new PostgresCreateUserRepository()
-   
-   const postgresGetUserByEmailRepository =
-      new PostgresGetUserByEmailRepository()
+   const createUserRepository = new PostgresCreateUserRepository()
+
+   const getUserByEmailRepository = new PostgresGetUserByEmailRepository()
 
    const createUserService = new CreateUserService(
-      postgresGetUserByEmailRepository,
-      postgresCreateUserRepository,
+      getUserByEmailRepository,
+      createUserRepository,
    )
 
    const createUserController = new CreateUserController(createUserService)
@@ -45,14 +44,13 @@ export const makeCreateUserController = () => {
 }
 
 export const makeUpdateUserController = () => {
-   const postgresGetUserByEmailRepository =
-      new PostgresGetUserByEmailRepository()
+   const getUserByEmailRepository = new PostgresGetUserByEmailRepository()
 
-   const postgresUpdateUserRepository = new PostgresUpdateUserRepository()
+   const updateUserRepository = new PostgresUpdateUserRepository()
 
    const updateUserService = new UpdateUserService(
-      postgresGetUserByEmailRepository,
-      postgresUpdateUserRepository,
+      getUserByEmailRepository,
+      updateUserRepository,
    )
 
    const updateUserController = new UpdateUserController(updateUserService)
@@ -61,9 +59,9 @@ export const makeUpdateUserController = () => {
 }
 
 export const makeDeleteUserController = () => {
-   const postgresDeleteUserRepository = new PostgresDeleteUserRepository()
+   const deleteUserRepository = new PostgresDeleteUserRepository()
 
-   const deleteUserService = new DeleteUserService(postgresDeleteUserRepository)
+   const deleteUserService = new DeleteUserService(deleteUserRepository)
 
    const deleteUserController = new DeleteUserController(deleteUserService)
 

@@ -8,7 +8,7 @@ export class CreateTransactionService {
    }
 
    async execute(createTransactionParams) {
-      const userId = createTransactionParams.userId
+      const userId = createTransactionParams.user_id
 
       const user = await this.getUserByIdRepository.execute(userId)
 
@@ -20,7 +20,7 @@ export class CreateTransactionService {
 
       const transaction = await this.createTransactionRepository.execute({
          ...createTransactionParams,
-         id: transactionId,
+         ID: transactionId,
       })
 
       return transaction

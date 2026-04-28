@@ -1,29 +1,28 @@
 import validator from 'validator'
 import { badRequest } from './index.js'
 
+// ==> Check Section
+export const checkIfTypeIsValid = (type) => {
+   return ['EARNING', 'EXPENSE', 'INVESTMENT'].includes(type)
+}
+
 export const checkIfAmountIsValid = (amount) => {
-   validator.isCurrency(amount.toString(), {
+   return validator.isCurrency(amount.toString(), {
       digits_after_decimal: [2],
       allow_negatives: false,
       decimal_separator: '.',
    })
 }
 
-export const checkIfTypeIsValid = (type) =>
-   ['EARNING', 'EXPENSE', 'INVESTMENT'].includes(type)
-
-export const negativeAmountResponse = () =>
-   badRequest({
-      message: 'The amount must be greater than 0.',
-   })
-
-export const invalidAmountResponse = () =>
-   badRequest({
+// ==> Response Section
+export const invalidAmountResponse = () => {
+   return badRequest({
       message: 'The amount must be a valid currency.',
    })
+}
 
 export const invalidTypeResponse = () => {
-   badRequest({
+   return badRequest({
       message: 'The type must be EARNING, EXPENSE or INVESTMENT.',
    })
 }
