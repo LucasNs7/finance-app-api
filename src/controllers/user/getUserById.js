@@ -5,7 +5,7 @@ import {
    notFound,
    ok,
    userNotFoundResponse,
-} from './helpers/index.js'
+} from '../helpers/index.js'
 
 export class GetUserByIdController {
    constructor(getUserByIdService) {
