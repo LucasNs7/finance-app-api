@@ -1,4 +1,3 @@
-import { GetUserByIdService } from '../service/index.js'
 import {
    checkIfIdIsValid,
    invalidIdResponse,
@@ -9,6 +8,10 @@ import {
 } from './helpers/index.js'
 
 export class GetUserByIdController {
+   constructor(getUserByIdService) {
+      this.getUserByIdService = getUserByIdService
+   }
+
    async execute(httpRequest) {
       try {
          const userId = httpRequest.params.userId
@@ -18,9 +21,7 @@ export class GetUserByIdController {
             return invalidIdResponse()
          }
 
-         const getUserByIdService = new GetUserByIdService()
-
-         const user = await getUserByIdService.execute(
+         const user = await this.getUserByIdService.execute(
             httpRequest.params.userId,
          )
 

@@ -1,4 +1,3 @@
-import { DeleteUserService } from '../service/index.js'
 import {
    checkIfIdIsValid,
    invalidIdResponse,
@@ -8,6 +7,10 @@ import {
 } from './helpers/index.js'
 
 export class DeleteUserController {
+   constructor(deleteUserService) {
+      this.deleteUserService = deleteUserService
+   }
+
    async execute(httpRequest) {
       try {
          const userId = httpRequest.params.userId
@@ -16,9 +19,7 @@ export class DeleteUserController {
 
          if (!idIsValid) return invalidIdResponse()
 
-         const deleteUserService = new DeleteUserService()
-
-         const deletedUser = await deleteUserService.execute(userId)
+         const deletedUser = await this.deleteUserService.execute(userId)
 
          if (!deletedUser) return userNotFoundResponse()
 
