@@ -1,15 +1,16 @@
 import { UserNotFoundError } from '../../errors/user.js'
 import {
+   serverError,
+   userNotFoundResponse,
+   ok,
    checkIfIdIsValid,
    invalidIdResponse,
    requiredFieldIsMissingResponse,
-} from '../helpers/generic.js'
-import { ok } from '../helpers/http.js'
-import { serverError, userNotFoundResponse } from '../index.js'
+} from '../helpers/index.js'
 
 export class GetTransactionsByUserIdController {
-   constructor(getTransactionByUserIdService) {
-      this.getTransactionByUserIdService = getTransactionByUserIdService
+   constructor(getTransactionsByUserIdService) {
+      this.getTransactionsByUserIdService = getTransactionsByUserIdService
    }
 
    async execute(httpRequest) {
@@ -22,8 +23,8 @@ export class GetTransactionsByUserIdController {
 
          if (!userIdIsValid) return invalidIdResponse()
 
-         const transactions = this.getTransactionByUserIdService.execute({
-            userId,
+         const transactions = await this.getTransactionsByUserIdService.execute({
+               userId,
          })
 
          return ok(transactions)
