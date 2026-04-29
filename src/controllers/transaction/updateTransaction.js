@@ -21,7 +21,9 @@ export class UpdateTransactionController {
 
          const transactionIdIsValid = checkIfIdIsValid(transactionId)
 
-         if (!transactionIdIsValid) return invalidIdResponse()
+         if (!transactionIdIsValid) {
+            return invalidIdResponse()
+         }
 
          const updateParams = httpRequest.body
 
@@ -40,19 +42,23 @@ export class UpdateTransactionController {
          if (updateParams.amount) {
             const amountIsValid = checkIfAmountIsValid(updateParams.amount)
 
-            if (!amountIsValid) return invalidAmountResponse()
+            if (!amountIsValid) {
+               return invalidAmountResponse()
+            }
          }
 
          if (updateParams.type) {
             const typeIsValid = checkIfTypeIsValid(updateParams.type)
 
-            if (!typeIsValid) return invalidTypeResponse()
+            if (!typeIsValid) {
+               return invalidTypeResponse()
+            }
          }
 
-         const transaction = await this.updateTransactionService.execute({
+         const transaction = await this.updateTransactionService.execute(
             transactionId,
             updateParams,
-         })
+         )
 
          return ok(transaction)
       } catch (error) {
