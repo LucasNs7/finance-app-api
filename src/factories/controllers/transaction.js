@@ -1,15 +1,18 @@
 import {
    CreateTransactionController,
+   DeleteTransactionController,
    GetTransactionsByUserIdController,
    UpdateTransactionController,
 } from '../../controllers/index.js'
 import {
    CreateTransactionService,
+   DeleteTransactionService,
    GetTransactionsByUserIdService,
    UpdateTransactionService,
 } from '../../service/index.js'
 import {
    PostgresCreateTransactionRepository,
+   PostgresDeleteTransactionRepository,
    PostgresGetTransactionsByUserIdRepository,
    PostgresGetUserByIdRepository,
    PostgresUpdateTransactionRepository,
@@ -61,4 +64,18 @@ export const makeUpdateTransactionController = () => {
    )
 
    return updateTransactionController
+}
+
+export const makeDeleteTransactionController = () => {
+   const deleteTransactionRepository = new PostgresDeleteTransactionRepository()
+
+   const deleteTransactionService = new DeleteTransactionService(
+      deleteTransactionRepository,
+   )
+
+   const deleteTransactionController = new DeleteTransactionController(
+      deleteTransactionService,
+   )
+
+   return deleteTransactionController
 }
