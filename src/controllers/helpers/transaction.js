@@ -1,5 +1,5 @@
 import validator from 'validator'
-import { badRequest } from './index.js'
+import { badRequest, notFound } from './index.js'
 
 // ==> Check Section
 export const checkIfTypeIsValid = (type) => {
@@ -26,5 +26,11 @@ export const invalidAmountResponse = () => {
 export const invalidTypeResponse = () => {
    return badRequest({
       message: 'The type must be EARNING, EXPENSE or INVESTMENT.',
+   })
+}
+
+export const transactionNotFoundResponse = () => {
+   return notFound({
+      message: 'Transaction not found',
    })
 }
