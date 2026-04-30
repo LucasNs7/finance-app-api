@@ -7,7 +7,7 @@ export class GetUserBalanceService {
    }
 
    async execute(params) {
-      const { userId } = params
+      const userId = params.userId
 
       const user = await this.getUserByIdRepository.execute(userId)
 
