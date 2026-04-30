@@ -10,6 +10,10 @@ export const checkIfIsString = (value) => {
    return typeof value == 'string'
 }
 
+export const checkIfSomeFieldIsNotAllowed = (params, allowedFields) => {
+   return Object.keys(params).some((field) => !allowedFields.includes(field))
+}
+
 // ==> Validate Section
 export const validateRequiredFields = (params, requiredFields) => {
    for (const field of requiredFields) {
@@ -45,5 +49,11 @@ export const invalidIdResponse = () => {
 export const requiredFieldIsMissingResponse = (missingField) => {
    return badRequest({
       message: `Missing field: ${missingField}`,
+   })
+}
+
+export const someFieldIsNotAllowedResponse = () => {
+   return badRequest({
+      message: 'Some provided field is not allowed.',
    })
 }

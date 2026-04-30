@@ -8,6 +8,8 @@ import {
    badRequest,
    ok,
    serverError,
+   someFieldIsNotAllowedResponse,
+   checkIfSomeFieldIsNotAllowed,
 } from '../helpers/index.js'
 
 export class UpdateUserController {
@@ -20,7 +22,7 @@ export class UpdateUserController {
          const userId = httpRequest.params.userId
 
          const isValidId = checkIfIdIsValid(userId)
-         
+
          if (!isValidId) {
             return invalidIdResponse()
          }
@@ -29,14 +31,13 @@ export class UpdateUserController {
 
          const allowedFields = ['first_name', 'last_name', 'email', 'password']
 
-         const someFieldIsNotAllowed = Object.keys(updateParams).some(
-            (field) => !allowedFields.includes(field),
+         const someFieldIsNotAllowed = checkIfSomeFieldIsNotAllowed(
+            updateParams,
+            allowedFields,
          )
 
          if (someFieldIsNotAllowed) {
-            return badRequest({
-               message: 'Some provided field is not allowed.',
-            })
+            return someFieldIsNotAllowedResponse()
          }
 
          if (updateParams.password) {

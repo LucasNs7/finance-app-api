@@ -2,12 +2,14 @@ import {
    badRequest,
    checkIfAmountIsValid,
    checkIfIdIsValid,
+   checkIfSomeFieldIsNotAllowed,
    checkIfTypeIsValid,
    invalidAmountResponse,
    invalidIdResponse,
    invalidTypeResponse,
    ok,
    serverError,
+   someFieldIsNotAllowedResponse,
 } from '../helpers/index.js'
 
 export class UpdateTransactionController {
@@ -29,14 +31,13 @@ export class UpdateTransactionController {
 
          const allowedFields = ['name', 'date', 'amount', 'type']
 
-         const someFieldIsNotAllowed = Object.keys(updateParams).some(
-            (field) => !allowedFields.includes(field),
+         const someFieldIsNotAllowed = checkIfSomeFieldIsNotAllowed(
+            updateParams,
+            allowedFields,
          )
 
          if (someFieldIsNotAllowed) {
-            return badRequest({
-               message: 'Some provided field is not allowed.',
-            })
+            return someFieldIsNotAllowedResponse()
          }
 
          if (updateParams.amount) {
